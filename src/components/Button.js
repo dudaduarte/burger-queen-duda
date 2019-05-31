@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Button (prop) {
+function Button (props) {
     return (
         <button className="button" onClick={props.onClick}>
             {props.text}

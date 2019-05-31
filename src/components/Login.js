@@ -1,6 +1,7 @@
 import React from "react";
 import "./Login.css";
 import Button from "./Button";
+import firebase from "./firebaseConfig";
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -13,21 +14,11 @@ export default class Login extends React.Component {
   }
 
   handleClick = () => {
-    const object = {
-      email: this.state.email,
-      password: this.state.password
-    };
-    database.collection("burger-queen").add(object);
     this.setState({
-      listItem: this.state.listItem.concat
-    });
-    this.setState({
-      listItem: [
-        {
+      listItem: this.state.listItem.concat({
           email: this.state.email,
           password: this.state.password
-        }
-      ]
+      })
     });
   };
 
@@ -36,16 +27,6 @@ export default class Login extends React.Component {
     newState[element] = event.target.value;
     this.setState(newState);
   };
-
-  handleEmail = event => {
-    this.setState({ email: event.target.value });
-  };
-
-  handlePassword = event => {
-    this.setState({ password: event.target.value });
-  };
-
-  // onChange = {(e) => this.handleChange(e, "email")}
 
   render() {
     return (
@@ -57,7 +38,7 @@ export default class Login extends React.Component {
             id="email"
             placeholder="e-mail"
             value={this.state.email}
-            onChange={this.handleEmail}
+            onChange={event => this.handleChange(event, "email")}
           />
         </div>
         <div>
@@ -67,7 +48,7 @@ export default class Login extends React.Component {
             id="password"
             placeholder="password"
             value={this.state.password}
-            onChange={this.handlePassword}
+            onChange={event => this.handleChange(event, "password")}
           />
         </div>
         {/* <Button text="clique aqui" /> */}

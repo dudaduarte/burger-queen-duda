@@ -1,13 +1,11 @@
 import React from 'react';
 import './App.css';
 import BtnAccType from './components/SelectAccountType';
-import Login from './components/Login';
-import firebase from './firebaseConfig';
-
-const database = firebase.firestore();
+// import Login from './components/Login';
+import Orders from './components/getOrders';
 
 function App() {
-  return <Login />;
+  return <Orders />;
 }
 
 export default App;
