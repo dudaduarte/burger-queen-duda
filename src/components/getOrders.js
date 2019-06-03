@@ -11,20 +11,31 @@ export default class getOrders extends React.Component {
     this.state = {
       food: "",
       beverage: "",
-      clientName: "",
+      clientsName: "",
       listItem: []
     };
+  }
+
+  componentDidMount() {
+    database.collection('saloon-orders').get()
+    .then((querySnapshot) => {
+      const data = querySnapshot.docs.map(doc => doc.data());
+      this.setState({listItem: data});
+    })
   }
 
   handleClick = () => {
     const object = {
       food: this.state.food,
       beverage: this.state.beverage,
-      clientName: this.state.clientName
+      clientsName: this.state.clientsName
     };
-    database.collection("saloon-orders").add(object)
+    database.collection("saloon-orders").add(object);
     this.setState({
-      listItem: this.state.listItem.concat(object)
+      listItem: this.state.listItem.concat(object),
+      food: "",
+      beverage: "",
+      clientsName: ""
     });
   };
 
@@ -60,20 +71,20 @@ export default class getOrders extends React.Component {
         <div>
           <input
             type="text"
-            name="clientName"
-            id="clientName"
+            name="clientsName"
+            id="clientsName"
             placeholder="Nome do Cliente"
-            value={this.state.clientName}
-            onChange={event => this.handleChange(event, "clientName")}
+            value={this.state.clientsName}
+            onChange={event => this.handleChange(event, "clientsName")}
           />
         </div>
         <button id="submit" type="submit" onClick={this.handleClick}>
           Enviar Pedido
         </button>
-        {this.state.listItem.map(item => {
+        {this.state.listItem.map((item, index) => {
           return (
-            <p>
-              {item.food} | {item.beverage} | {item.clientName}
+            <p key={index}>
+              {item.food} | {item.beverage} | {item.clientsName}
             </p>
           );
         })}

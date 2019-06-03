@@ -29,6 +29,8 @@
     ]
   },
   "devDependencies": {
-    "firebase": "^6.1.0"
+    "firebase": "^6.1.0",
+    "react-router-dom": "^5.0.0",
+    "react-with-firebase-auth": "^1.0.3"
   }
 }

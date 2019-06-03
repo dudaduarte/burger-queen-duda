@@ -2,25 +2,19 @@ import React from "react";
 import "./Login.css";
 import Button from "./Button";
 import firebase from "./firebaseConfig";
+import withFirebaseAuth from 'react-with-firebase-auth';
+// import getOrders from './pages/getOrders'
 
-export default class Login extends React.Component {
+const firebaseAppAuth = firebase.auth();
+
+class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
-      password: "",
-      listItem: []
+      password: ""
     };
   }
-
-  handleClick = () => {
-    this.setState({
-      listItem: this.state.listItem.concat({
-          email: this.state.email,
-          password: this.state.password
-      })
-    });
-  };
 
   handleChange = (event, element) => {
     const newState = this.state;
@@ -28,13 +22,29 @@ export default class Login extends React.Component {
     this.setState(newState);
   };
 
+  createUser = () => {
+    this.props.createUserWithEmailAndPassword(this.state.email, this.state.password);
+  }
+
+  signIn = () => {
+    this.props.signInWithEmailAndPassword(this.state.email, this.state.password)
+    .then(() => {
+      alert('logado');
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }
+
   render() {
+
+    console.log(this.props.user);
+
     return (
       <section>
         <div>
           <input
             type="text"
-            name="email"
             id="email"
             placeholder="e-mail"
             value={this.state.email}
@@ -44,25 +54,24 @@ export default class Login extends React.Component {
         <div>
           <input
             type="password"
-            name="password"
             id="password"
-            placeholder="password"
+            placeholder="senha"
             value={this.state.password}
             onChange={event => this.handleChange(event, "password")}
           />
         </div>
         {/* <Button text="clique aqui" /> */}
-        <button id="submit" type="submit" onClick={this.handleClick}>
-          Enviar
+        <button id="create-user-btn" type="submit" onClick={this.createUser}>
+          Criar Usuário
         </button>
-        {this.state.listItem.map(item => {
-          return (
-            <p>
-              {item.email} | {item.password}
-            </p>
-          );
-        })}
+        <button id="login-btn" type="submit" onClick={this.signIn}>
+          Login
+        </button>
       </section>
     );
   }
 }
+
+export default withFirebaseAuth({
+  firebaseAppAuth,
+})(Login);
