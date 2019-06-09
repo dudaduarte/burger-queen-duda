@@ -16,21 +16,19 @@ class Login extends React.Component {
     };
   }
 
+  handlePageChange = () => {
+    window.location = '/get-orders'
+  }
+
   handleChange = (event, element) => {
     const newState = this.state;
     newState[element] = event.target.value;
     this.setState(newState);
   };
 
-  createUser = () => {
-    this.props.createUserWithEmailAndPassword(this.state.email, this.state.password);
-  }
-
   signIn = () => {
     this.props.signInWithEmailAndPassword(this.state.email, this.state.password)
-    .then(() => {
-      alert('logado');
-    })
+    .then(this.handlePageChange)
     .catch((error) => {
       console.log(error);
     })
@@ -60,10 +58,6 @@ class Login extends React.Component {
             onChange={event => this.handleChange(event, "password")}
           />
         </div>
-        {/* <Button text="clique aqui" /> */}
-        <button id="create-user-btn" type="submit" onClick={this.createUser}>
-          Criar Usuário
-        </button>
         <button id="login-btn" type="submit" onClick={this.signIn}>
           Login
         </button>
