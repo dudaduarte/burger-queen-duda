@@ -1,0 +1,26 @@
+.get-orders-container {
+    margin: 0 2em 2em;
+}
+
+.title-orders {
+    font-size: 30px;
+    margin: 1em 0;
+}
+
+.title-menu {
+    font-size: 30px;
+    color: rgb(255, 230, 92);
+}
+
+.title-day-menu {
+    font-size: 22px;
+    color: rgb(255, 224, 45);
+}
+
+.btn-m {
+    margin: 5px;
+}
+
+.text-orders {
+    font-size: 24px;
+}

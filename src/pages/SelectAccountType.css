@@ -1,0 +1,6 @@
+.btn-container {
+  margin: 2em;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+}

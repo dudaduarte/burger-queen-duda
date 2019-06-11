@@ -1,64 +1,64 @@
-import React from "react";
-import "./Login.css";
-import Button from "./Button";
-import firebase from "./firebaseConfig";
-import withFirebaseAuth from "react-with-firebase-auth";
+import React from 'react';
+import './getOrders.css';
+import Button from '../components/Button';
+import firebase from '../firebaseConfig';
+import withFirebaseAuth from 'react-with-firebase-auth';
 
 const menu = {
   breakfast: [
     {
-      name: "Café Americano",
+      name: 'Café Americano',
       price: 5,
     },
     {
-      name: "Café com Leite",
+      name: 'Café com Leite',
       price: 7,
     },
     {
-      name: "Sanduíche de presunto e queijo",
+      name: 'Sanduíche de presunto e queijo',
       price: 10,
     },
     {
-      name: "Suco de fruta natural",
+      name: 'Suco de fruta natural',
       price: 7,
     },
   ],
   dayMenu: {
     Hamburgueres: [
       {
-        name: "Hamburguer simples",
+        name: 'Hamburguer simples',
         price: 10,
       },
       {
-        name: "Hamburguer duplo",
+        name: 'Hamburguer duplo',
         price: 15,
       },
     ],
     Acompanhamentos: [
       {
-        name: "Batata frita",
+        name: 'Batata frita',
         price: 5,
       },
       {
-        name: "Anéis de cebola",
+        name: 'Anéis de cebola',
         price: 5,
       },
     ],
     Bebidas: [
       {
-        name: "Água 500ml",
+        name: 'Água 500ml',
         price: 5,
       },
       {
-        name: "Água 750ml",
+        name: 'Água 750ml',
         price: 7,
       },
       {
-        name: "Bebida gaseificada 500ml",
+        name: 'Bebida gaseificada 500ml',
         price: 7,
       },
       {
-        name: "Bebida gaseificada 750ml",
+        name: 'Bebida gaseificada 750ml',
         price: 10,
       },
     ],
@@ -72,8 +72,8 @@ class GetOrders extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      clientsName: "",
-      table: "",
+      clientsName: '',
+      table: '',
       list: [],
     };
   }
@@ -125,24 +125,28 @@ class GetOrders extends React.Component {
   };
 
   handleClick = () => {
-    let order = {
-      order: this.state.list,
-      clientsName: this.state.clientsName,
-      table: this.state.table,
-    };
-    database
-      .collection("saloon-orders")
-      .add(order)
-      .then(() => alert("Pedido enviado com sucesso!"));
-    this.setState({
-      list: [],
-      clientsName: "",
-      table: ""
-    });
+    if (this.state.clientsName && this.state.table && this.state.list !== []) {
+      let order = {
+        order: this.state.list,
+        clientsName: this.state.clientsName,
+        table: this.state.table,
+      };
+      database
+        .collection('saloon-orders')
+        .add(order)
+        .then(() => alert('Pedido enviado com sucesso!'));
+      this.setState({
+        list: [],
+        clientsName: '',
+        table: ''
+      });
+    } else {
+      alert('Por favor, insira o nome e a mesa do cliente antes de enviar o pedido.')
+    }
   };
 
   signOut = () => {
-    this.props.signOut().then(() => (window.location = "/"));
+    this.props.signOut().then(() => (window.location = '/'));
   };
 
   render() {
@@ -150,30 +154,36 @@ class GetOrders extends React.Component {
       return acc + cur.amount * cur.price;
     }, 0);
     return (
-      <React.Fragment>
+      <section className="get-orders-container">
+        <form>
+        <h1 className="title-orders">Informações do Cliente</h1>
+          <div className="form-group">
+            <input
+              type="text"
+              className="form-control"
+              id="clientsName"
+              value={this.state.clientsName}
+              onChange={event => this.handleChange(event, "clientsName")}
+              placeholder="Nome do cliente"
+            />
+          </div>
+          <div className="form-group">
+            <input
+              type="text"
+              className="form-control"
+              id="table"
+              value={this.state.table}
+              onChange={event => this.handleChange(event, "table")}
+              placeholder="Número da mesa"
+            />
+          </div>
+        </form>
+        <hr/>
         <div>
-          <input
-            type="text"
-            id="clientsName"
-            placeholder="Nome do Cliente"
-            value={this.state.clientsName}
-            onChange={event => this.handleChange(event, "clientsName")}
-          />
-        </div>
-        <div>
-          <input
-            type="text"
-            id="table"
-            placeholder="Número da Mesa"
-            value={this.state.table}
-            onChange={event => this.handleChange(event, "table")}
-          />
-        </div>
-        <div>
-          <h1>Café da Manhã</h1>
+          <h2 className="title-menu">Café da Manhã</h2>
           {menu.breakfast.map((product, index) => {
             return (
-              <button key={index} onClick={() => this.cliqueDaCompra(product)}>
+              <button className="btn btn-outline-light btn-m" key={index} onClick={() => this.cliqueDaCompra(product)}>
                 {product.name}
               </button>
             );
@@ -181,15 +191,16 @@ class GetOrders extends React.Component {
         </div>
         <hr />
         <div>
-          <h1>Menu do dia</h1>
+          <h2 className="title-menu">Menu do Dia</h2>
           {Object.keys(menu.dayMenu).map((title, titleIndex) => {
             return (
-            <React.Fragment>
-              <div key={titleIndex}>{title}</div>
+            <section>
+              <h3 key={titleIndex} className="title-day-menu">{title}</h3>
               {
                 menu.dayMenu[title].map((product, productIndex) => {
                 return (
                   <button
+                    className="btn btn-outline-light btn-m"
                     key={productIndex}
                     onClick={() => this.cliqueDaCompra(product)}
                   >
@@ -198,29 +209,28 @@ class GetOrders extends React.Component {
                 );
               })
               }
-              </React.Fragment>
+              </section>
             )
           })}
         </div>
         <hr />
+        <h1 class="title-orders">Pedido</h1>
         {this.state.list.map((product, index) => {
           return (
             <div>
-              <button key={index} onClick={() => this.deleteItem(product)}>
+              <button className="btn btn-warning btn-m" key={index} onClick={() => this.deleteItem(product)}>
                 {product.name}
               </button>
-              <span>
-                x{product.amount} - Preço: {product.price * product.amount}
+              <span className="text-orders">
+                 x {product.amount} - Valor: R${product.price * product.amount}
               </span>
             </div>
           );
         })}
-        <h1>Total</h1>
-        <p>Valor total: {valorTotal}</p>
-        <Button text="Enviar Pedido" onClick={this.handleClick} />
-        <hr />
-        <Button text="Sair" onClick={this.signOut} />
-      </React.Fragment>
+        <hr/>
+        <h1 className="title-orders">Preço total: R${valorTotal} </h1>
+        <Button className="btn btn-danger" text="Enviar Pedido" onClick={this.handleClick} />
+      </section>
     );
   }
 }

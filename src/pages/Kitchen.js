@@ -1,5 +1,5 @@
-import React from "react";
-import firebase from "../components/firebaseConfig";
+import React from 'react';
+import firebase from '../firebaseConfig';
 const database = firebase.firestore();
 
 class Kitchen extends React.Component {
@@ -7,17 +7,23 @@ class Kitchen extends React.Component {
     super(props);
     this.state = {
       listItem: [],
+      listDone: [],
     };
   }
 
   componentDidMount() {
     database
-      .collection("saloon-orders")
+      .collection('saloon-orders')
       .get()
       .then(querySnapshot => {
         const data = querySnapshot.docs.map(doc => doc.data());
         this.setState({ listItem: data });
       });
+  }
+
+  readyBtn() {
+    database
+      .collection('saloon-orders');
   }
 
   render() {
@@ -29,6 +35,9 @@ class Kitchen extends React.Component {
               <p key={index}>
                 Cliente: {item.clientsName} - Mesa: {item.table}
               </p>
+              <span>
+                <button onClick={this.state.listItem}>Pronto</button>
+              </span>
               <ul>
                 {item.order.map(product => {
                   return (
