@@ -3,9 +3,10 @@ import "./Login.css";
 import Button from "../components/Button";
 import firebase from "../firebaseConfig";
 import withFirebaseAuth from "react-with-firebase-auth";
-// import getOrders from './pages/getOrders'
+// import Saloon from './pages/Saloon'
 
 const firebaseAppAuth = firebase.auth();
+const database = firebase.firestore();
 
 class Login extends React.Component {
   constructor(props) {
@@ -16,10 +17,6 @@ class Login extends React.Component {
     };
   }
 
-  handlePageChange = () => {
-    window.location = "/get-orders";
-  };
-
   handleChange = (event, element) => {
     const newState = this.state;
     newState[element] = event.target.value;
@@ -28,17 +25,25 @@ class Login extends React.Component {
 
   signIn = event => {
     event.preventDefault();
-    firebase.auth()
+    firebase
+      .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then(this.handlePageChange)
+      .then(resp => {
+        const uid = resp.user.uid;
+        database
+          .collection("users")
+          .doc(uid)
+          .get()
+          .then(doc => this.props.history.push(`/${doc.data().accType}`));
+      })
       .catch(error => {
-        alert('Suas informações de login estão incorretas. Tente novamente ou crie uma conta.');
+        alert(
+          "Suas informações de login estão incorretas. Tente novamente ou crie uma conta."
+        );
       });
   };
 
   render() {
-    // console.log(this.props.user);
-
     return (
       <section className="login-container">
         <form>

@@ -1,74 +1,12 @@
 import React from 'react';
-import './getOrders.css';
+import './Saloon.css';
 import Button from '../components/Button';
 import firebase from '../firebaseConfig';
-import withFirebaseAuth from 'react-with-firebase-auth';
-
-const menu = {
-  breakfast: [
-    {
-      name: 'Café Americano',
-      price: 5,
-    },
-    {
-      name: 'Café com Leite',
-      price: 7,
-    },
-    {
-      name: 'Sanduíche de presunto e queijo',
-      price: 10,
-    },
-    {
-      name: 'Suco de fruta natural',
-      price: 7,
-    },
-  ],
-  dayMenu: {
-    Hamburgueres: [
-      {
-        name: 'Hamburguer simples',
-        price: 10,
-      },
-      {
-        name: 'Hamburguer duplo',
-        price: 15,
-      },
-    ],
-    Acompanhamentos: [
-      {
-        name: 'Batata frita',
-        price: 5,
-      },
-      {
-        name: 'Anéis de cebola',
-        price: 5,
-      },
-    ],
-    Bebidas: [
-      {
-        name: 'Água 500ml',
-        price: 5,
-      },
-      {
-        name: 'Água 750ml',
-        price: 7,
-      },
-      {
-        name: 'Bebida gaseificada 500ml',
-        price: 7,
-      },
-      {
-        name: 'Bebida gaseificada 750ml',
-        price: 10,
-      },
-    ],
-  },
-};
+import menu from '../Menu.json';
 
 const database = firebase.firestore();
-const firebaseAppAuth = firebase.auth();
 
-class GetOrders extends React.Component {
+class Saloon extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -235,6 +173,4 @@ class GetOrders extends React.Component {
   }
 }
 
-export default withFirebaseAuth({
-  firebaseAppAuth,
-})(GetOrders);
+export default Saloon;

@@ -19,10 +19,6 @@ class createAccount extends React.Component {
     };
   }
 
-  handlePageChange = () => {
-    window.location = "/get-orders";
-  };
-
   handleChange = (event, element) => {
     const newState = this.state;
     newState[element] = event.target.value;
@@ -34,18 +30,17 @@ class createAccount extends React.Component {
       this.props
         .createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then(resp => {
-          const idUser = resp.user.uid;
           database
             .collection("users")
-            .doc(idUser)
+            .doc(resp.user.uid)
             .set({
               email: this.state.email,
               displayName: this.state.displayName,
               accType: this.state.accType,
             });
         })
-        .then(this.handlePageChange)
-        .catch(() => alert('Ocorreu um erro. Tente novamente.'));
+        .then(() => this.props.history.push(`/${this.state.accType}`))
+        .catch(() => alert("Ocorreu um erro. Tente novamente."));
     } else {
       alert(
         "As senhas digitadas não conferem entre si. Insira novamente sua senha e confirme."
@@ -54,8 +49,6 @@ class createAccount extends React.Component {
   };
 
   render() {
-    // console.log(this.props.user);
-
     return (
       <section className="create-user-container">
         <form>
