@@ -18,14 +18,40 @@
     }
   ],
   "dayMenu": {
-    "Hamburgueres": [
+    "Hamburgueres de Frango": [
       {
-        "name": "Hamburguer simples",
-        "price": 10
+        "name": "Hamburguer simples de frango",
+        "price": 10,
+        "extras": []
       },
       {
-        "name": "Hamburguer duplo",
-        "price": 15
+        "name": "Hamburguer duplo de frango",
+        "price": 15,
+        "extras": []
+      }
+    ],
+    "Hamburgueres de Carne": [
+      {
+        "name": "Hamburguer simples de carne",
+        "price": 10,
+        "extras": []
+      },
+      {
+        "name": "Hamburguer duplo de carne",
+        "price": 15,
+        "extras": []
+      }
+    ],
+    "Hamburgueres Vegetarianos": [
+      {
+        "name": "Hamburguer simples vegetariano",
+        "price": 10,
+        "extras": []
+      },
+      {
+        "name": "Hamburguer duplo vegetariano",
+        "price": 15,
+        "extras": []
       }
     ],
     "Acompanhamentos": [

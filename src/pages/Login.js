@@ -29,10 +29,9 @@ class Login extends React.Component {
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(resp => {
-        const uid = resp.user.uid;
         database
           .collection("users")
-          .doc(uid)
+          .doc(resp.user.uid)
           .get()
           .then(doc => this.props.history.push(`/${doc.data().accType}`));
       })

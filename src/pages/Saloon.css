@@ -5,6 +5,14 @@
 .title-orders {
     font-size: 30px;
     margin: 1em 0;
+    max-width: 500px !important;
+}
+
+.btn-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding-bottom: 0.5em;
 }
 
 .title-menu {
@@ -19,8 +27,28 @@
 
 .btn-m {
     margin: 5px;
+    padding: 8px;
 }
 
 .text-orders {
     font-size: 24px;
+    color: black;
+    text-align: center;
+}
+
+.btn-car {
+    padding: 0.8em;
+    background-color: rgb(180, 33, 33);
+    width: 4.5em;
+    height: 4.5em;
+    position: fixed;
+    border-radius: 50%;
+    outline: none;
+    right: 1em;
+    top: 4em;
+}
+
+.fa-shopping-cart {
+    color: white;
+    font-size: 34px;
 }
